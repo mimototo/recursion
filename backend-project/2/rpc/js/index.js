@@ -3,7 +3,17 @@ const net = require("net");
 const client = new net.Socket();
 client.connect(12345, "127.0.0.1", () => {
   console.log("Connected");
-  client.write("Hello, server!");
+
+  // create a JSON object
+  const request = {
+    method: "floor",
+    params: [3.14],
+    param_types: ["double"],
+    id: 1,
+  };
+
+  // send the JSON object to the server
+  client.write(JSON.stringify(request));
 });
 
 client.on("data", (data) => {
